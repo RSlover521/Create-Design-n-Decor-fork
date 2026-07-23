@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import com.tterrag.registrate.util.entry.RegistryEntry;
+import dev.lopyluna.dndecor.events.DnDecorLegacyMappings;
 import dev.lopyluna.dndecor.register.*;
 import net.createmod.catnip.lang.FontHelper;
 import net.createmod.catnip.lang.LangBuilder;
@@ -22,6 +23,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -70,6 +72,7 @@ public class DnDecor {
         DnDecorBlocks.register();
         DnDecorBETypes.register();
         DnDecorCreativeTabs.register(modEventBus);
+        MinecraftForge.EVENT_BUS.addListener(DnDecorLegacyMappings::onMissingMappings);
 
 //      DnDecorConfigs.register(modLoadingContext, modContainer);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> DnDecorClient::new);

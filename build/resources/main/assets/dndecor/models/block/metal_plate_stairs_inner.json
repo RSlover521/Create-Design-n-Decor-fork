@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "dndecor:block/metal_plate",
+    "side": "dndecor:block/metal_plate",
+    "top": "dndecor:block/metal_plate"
+  }
+}

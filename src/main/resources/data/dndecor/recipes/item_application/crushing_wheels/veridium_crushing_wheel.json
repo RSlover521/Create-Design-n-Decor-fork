@@ -1,0 +1,17 @@
+
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "tag": "forge:assets/create/crushing_wheels"
+    },
+    {
+      "item": "create:veridium"
+    }
+  ],
+  "results": [
+    {
+      "item": "dndecor:veridium_crushing_wheel"
+    }
+  ]
+}

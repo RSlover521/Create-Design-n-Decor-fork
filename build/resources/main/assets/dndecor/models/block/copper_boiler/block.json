@@ -1,0 +1,6 @@
+{
+	"parent": "dndecor:block/copper_boiler/copper_boiler",
+	"loader": "forge:obj",
+	"flip_v": true,
+	"model": "dndecor:models/block/boilers/model.obj"
+}

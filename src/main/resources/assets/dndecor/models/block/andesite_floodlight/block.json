@@ -1,0 +1,6 @@
+{
+  "parent": "dndecor:block/andesite_floodlight/model",
+  "textures": {
+    "0": "dndecor:block/andesite_floodlight_off"
+  }
+}

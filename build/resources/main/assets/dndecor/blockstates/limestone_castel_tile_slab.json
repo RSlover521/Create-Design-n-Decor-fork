@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "dndecor:block/limestone_castel_tile_slab"
+    },
+    "type=double": {
+      "model": "dndecor:block/limestone_castel_tiles"
+    },
+    "type=top": {
+      "model": "dndecor:block/limestone_castel_tile_slab_top"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "dndecor:block/brass_lamp",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "dndecor:block/brass_lamp",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "dndecor:block/brass_lamp",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "dndecor:block/brass_lamp",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "dndecor:block/brass_lamp"
+    },
+    "facing=west": {
+      "model": "dndecor:block/brass_lamp",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

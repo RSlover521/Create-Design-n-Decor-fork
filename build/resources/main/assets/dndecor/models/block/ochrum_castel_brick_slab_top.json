@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "dndecor:block/ochrum_castel_bricks",
+    "side": "dndecor:block/ochrum_castel_bricks",
+    "top": "dndecor:block/ochrum_castel_bricks"
+  }
+}

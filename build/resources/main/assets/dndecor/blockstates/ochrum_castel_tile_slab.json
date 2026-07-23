@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "dndecor:block/ochrum_castel_tile_slab"
+    },
+    "type=double": {
+      "model": "dndecor:block/ochrum_castel_tiles"
+    },
+    "type=top": {
+      "model": "dndecor:block/ochrum_castel_tile_slab_top"
+    }
+  }
+}

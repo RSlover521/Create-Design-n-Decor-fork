@@ -1,0 +1,6 @@
+{
+  "parent": "dndecor:block/copper_floodlight/model",
+  "textures": {
+    "1": "dndecor:block/copper_floodlight_dim"
+  }
+}

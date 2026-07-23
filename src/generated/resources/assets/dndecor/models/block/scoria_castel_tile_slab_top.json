@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "dndecor:block/scoria_castel_tiles",
+    "side": "dndecor:block/scoria_castel_tiles",
+    "top": "dndecor:block/scoria_castel_tiles"
+  }
+}

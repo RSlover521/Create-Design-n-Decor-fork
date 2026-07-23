@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "dndecor:block/lime_metal_plate_slab"
+    },
+    "type=double": {
+      "model": "dndecor:block/lime_metal_plate"
+    },
+    "type=top": {
+      "model": "dndecor:block/lime_metal_plate_slab_top"
+    }
+  }
+}

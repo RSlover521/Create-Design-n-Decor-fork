@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "dndecor:block/old/pink_metal_sheet",
+    "side": "dndecor:block/old/pink_metal_sheet",
+    "top": "dndecor:block/old/pink_metal_sheet"
+  }
+}

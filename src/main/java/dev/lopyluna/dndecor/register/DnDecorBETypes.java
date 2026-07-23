@@ -16,6 +16,7 @@ import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.lopyluna.dndecor.DnDecor;
 import dev.lopyluna.dndecor.content.blocks.MillstoneTypeRenderer;
+import dev.lopyluna.dndecor.content.blocks.LegacyCeilingFanRenderer;
 import dev.lopyluna.dndecor.content.blocks.cogs.DnDCogwheelRenderer;
 import dev.lopyluna.dndecor.content.blocks.cogs.DnDCogwheelVisual;
 import dev.lopyluna.dndecor.content.blocks.flywheel.FlywheelTypeBlock;
@@ -69,8 +70,13 @@ public class DnDecorBETypes {
             .renderer(() -> DnDCogwheelRenderer::new)
             .register();
 
+    public static final BlockEntityEntry<BracketedKineticBlockEntity> CEILING_FAN = REGISTRATE
+            .blockEntity("ceiling_fan", BracketedKineticBlockEntity::new)
+            .renderer(() -> LegacyCeilingFanRenderer::new)
+            .validBlock(DnDecorBlocks.CEILING_FAN)
+            .register();
+
     public static final StoneTypeBEList<CrushingWheelBlockEntity> STONE_TYPE_CRUSHING_WHEELS = new StoneTypeBEList<>((block, id) -> {
-        if (id.equals("andesite")) return AllBlockEntityTypes.CRUSHING_WHEEL;
         return REGISTRATE.blockEntity(id + "_crushing_wheel", CrushingWheelBlockEntity::new)
                 .visual(() -> SingleAxisRotatingVisual.of(PartialModel.of(DnDecor.asResource("block/" + id + "_crushing_wheel/block"))), false)
                 .validBlock(DnDecorBlocks.STONE_TYPE_CRUSHING_WHEELS.get(block))
@@ -79,7 +85,6 @@ public class DnDecorBETypes {
     });
 
     public static final StoneTypeBEList<MillstoneBlockEntity> STONE_TYPE_MILLSTONES = new StoneTypeBEList<>((block, id) -> {
-        if (id.equals("andesite")) return AllBlockEntityTypes.MILLSTONE;
         return REGISTRATE.blockEntity(id + "_millstone", MillstoneBlockEntity::new)
                 .visual(() -> SingleAxisRotatingVisual.of(PartialModel.of(DnDecor.asResource("block/" + id + "_millstone/inner"))), false)
                 .validBlock(DnDecorBlocks.STONE_TYPE_MILLSTONE.get(block))

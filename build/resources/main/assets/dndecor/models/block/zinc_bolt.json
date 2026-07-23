@@ -1,0 +1,7 @@
+{
+	"parent": "dndecor:block/screws",
+	"textures": {
+		"0": "dndecor:block/old/zinc_bolt",
+		"particle": "dndecor:block/old/zinc_bolt"
+	}
+}

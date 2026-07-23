@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "dndecor:block/granite_castel_tile_slab"
+    },
+    "type=double": {
+      "model": "dndecor:block/granite_castel_tiles"
+    },
+    "type=top": {
+      "model": "dndecor:block/granite_castel_tile_slab_top"
+    }
+  }
+}

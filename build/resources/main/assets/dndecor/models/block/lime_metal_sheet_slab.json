@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "dndecor:block/old/lime_metal_sheet",
+    "side": "dndecor:block/old/lime_metal_sheet",
+    "top": "dndecor:block/old/lime_metal_sheet"
+  }
+}

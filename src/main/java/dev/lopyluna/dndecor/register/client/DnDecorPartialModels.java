@@ -18,7 +18,8 @@ public class DnDecorPartialModels {
             LARGE_DARK_METAL_COGWHEEL = block("large_dark_metal_cogwheel/block_shaftless"),
             INDUSTRIAL_COGWHEEL = block("industrial_cogwheel/block_shaftless"),
             LARGE_INDUSTRIAL_COGWHEEL = block("large_industrial_cogwheel/block_shaftless"),
-            STEPPED_LEVER_HANDLE = block("stepped_lever/lever");
+            STEPPED_LEVER_HANDLE = block("stepped_lever/lever"),
+            CEILING_FAN = block("ceiling_fan/fan");
     ;
 
     public static final Map<DyeColor, PartialModel> DYED_FLYWHEELS = new EnumMap<>(DyeColor.class);

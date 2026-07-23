@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "dndecor:block/limestone_castel_tiles",
+    "side": "dndecor:block/limestone_castel_tiles",
+    "top": "dndecor:block/limestone_castel_tiles"
+  }
+}

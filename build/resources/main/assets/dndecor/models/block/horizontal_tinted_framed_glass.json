@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "dndecor:block/palettes/horizontal_tinted_framed_glass"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "dndecor:block/red_metal_sheet_slab"
+    },
+    "type=double": {
+      "model": "dndecor:block/red_metal_sheet"
+    },
+    "type=top": {
+      "model": "dndecor:block/red_metal_sheet_slab_top"
+    }
+  }
+}

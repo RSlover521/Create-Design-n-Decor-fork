@@ -1,0 +1,6 @@
+{
+	"parent": "dndecor:block/capitalism_boiler_large/capitalism_boiler",
+	"loader": "forge:obj",
+	"flip_v": true,
+	"model": "dndecor:models/block/boilers/large_item.obj"
+}

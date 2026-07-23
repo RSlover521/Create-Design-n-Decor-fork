@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "dndecor:block/light_blue_metal_plate_slab"
+    },
+    "type=double": {
+      "model": "dndecor:block/light_blue_metal_plate"
+    },
+    "type=top": {
+      "model": "dndecor:block/light_blue_metal_plate_slab_top"
+    }
+  }
+}

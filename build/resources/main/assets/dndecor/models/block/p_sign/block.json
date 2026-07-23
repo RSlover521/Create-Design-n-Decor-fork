@@ -1,0 +1,7 @@
+{
+  "parent": "dndecor:block/legacy_sign",
+  "textures": {
+    "0": "dndecor:block/old/letter_signs/p",
+    "particle": "dndecor:block/old/letter_signs/p"
+  }
+}

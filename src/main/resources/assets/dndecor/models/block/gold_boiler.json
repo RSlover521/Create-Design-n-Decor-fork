@@ -1,0 +1,6 @@
+{
+	"parent": "dndecor:block/gold_boiler/gold_boiler",
+	"loader": "forge:obj",
+	"flip_v": true,
+	"model": "dndecor:models/block/boilers/model_item.obj"
+}

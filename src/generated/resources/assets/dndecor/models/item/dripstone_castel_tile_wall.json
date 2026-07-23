@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "dndecor:block/walls/dripstone_castel_tiles"
+  }
+}

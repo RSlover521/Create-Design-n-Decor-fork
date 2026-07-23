@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "tag": "dndecor:letter_signs"
+  },
+  "result": "dndecor:f_sign"
+}

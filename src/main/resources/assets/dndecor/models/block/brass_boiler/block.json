@@ -1,0 +1,6 @@
+{
+	"parent": "dndecor:block/brass_boiler/brass_boiler",
+	"loader": "forge:obj",
+	"flip_v": true,
+	"model": "dndecor:models/block/boilers/model.obj"
+}

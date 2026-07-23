@@ -1,0 +1,17 @@
+
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "tag": "forge:assets/create/millstones"
+    },
+    {
+      "item": "create:asurine"
+    }
+  ],
+  "results": [
+    {
+      "item": "dndecor:asurine_millstone"
+    }
+  ]
+}

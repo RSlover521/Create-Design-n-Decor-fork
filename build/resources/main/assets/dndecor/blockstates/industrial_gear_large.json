@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "dndecor:block/industrial_gear_large",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "dndecor:block/industrial_gear_large"
+    },
+    "axis=z": {
+      "model": "dndecor:block/industrial_gear_large",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

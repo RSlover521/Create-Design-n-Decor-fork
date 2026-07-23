@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "dndecor:block/old/purple_metal_plate",
+    "side": "dndecor:block/old/purple_metal_plate",
+    "top": "dndecor:block/old/purple_metal_plate"
+  }
+}

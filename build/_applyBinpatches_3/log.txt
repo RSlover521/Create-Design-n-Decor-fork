@@ -1,0 +1,8 @@
+Java Launcher: C:\Program Files\Java\jdk-17\bin\java.exe
+Arguments: '--clean, D:\Users\wxinc\OneDrive\Desktop\Minecraft-modding-stuff\Create-Design-n-Decor-fork\.gradle-user-home\caches\forge_gradle\mcp_repo\net\minecraft\joined\1.20.1-20230612.114412\joined-1.20.1-20230612.114412-srg.jar, --output, D:\Users\wxinc\OneDrive\Desktop\Minecraft-modding-stuff\Create-Design-n-Decor-fork\.gradle-user-home\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.20.1-47.4.8\forge-1.20.1-47.4.8-binpatched.jar, --apply, D:\Users\wxinc\OneDrive\Desktop\Minecraft-modding-stuff\Create-Design-n-Decor-fork\.gradle-user-home\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.20.1-47.4.8\forge-1.20.1-47.4.8-binpatches.lzma'
+Classpath:
+ - D:\Users\wxinc\OneDrive\Desktop\Minecraft-modding-stuff\Create-Design-n-Decor-fork\.gradle-user-home\caches\forge_gradle\maven_downloader\net\minecraftforge\binarypatcher\1.1.1\binarypatcher-1.1.1-fatjar.jar
+Working directory: D:\Users\wxinc\OneDrive\Desktop\Minecraft-modding-stuff\Create-Design-n-Decor-fork\build\_applyBinpatches_3
+Main class: net.minecraftforge.binarypatcher.ConsoleTool
+====================================
+Could not delete output file: D:\Users\wxinc\OneDrive\Desktop\Minecraft-modding-stuff\Create-Design-n-Decor-fork\.gradle-user-home\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.20.1-47.4.8\forge-1.20.1-47.4.8-binpatched.jar

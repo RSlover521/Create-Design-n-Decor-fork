@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "dndecor:block/stairs/dripstone_castel_tiles",
+    "side": "dndecor:block/stairs/dripstone_castel_tiles",
+    "top": "dndecor:block/stairs/dripstone_castel_tiles"
+  }
+}

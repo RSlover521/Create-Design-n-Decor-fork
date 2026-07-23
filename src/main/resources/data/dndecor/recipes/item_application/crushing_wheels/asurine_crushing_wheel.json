@@ -1,0 +1,17 @@
+
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "tag": "forge:assets/create/crushing_wheels"
+    },
+    {
+      "item": "create:asurine"
+    }
+  ],
+  "results": [
+    {
+      "item": "dndecor:asurine_crushing_wheel"
+    }
+  ]
+}

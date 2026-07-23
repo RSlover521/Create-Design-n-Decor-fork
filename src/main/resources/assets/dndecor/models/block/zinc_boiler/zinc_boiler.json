@@ -1,0 +1,8 @@
+{
+	"parent": "block/block",
+	"ambientocclusion": false,
+	"textures": {
+		"0": "dndecor:block/zinc_boiler",
+		"particle": "dndecor:block/zinc_boiler"
+	}
+}

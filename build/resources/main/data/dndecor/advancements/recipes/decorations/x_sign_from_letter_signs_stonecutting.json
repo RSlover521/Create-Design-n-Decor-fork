@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_letter_signs": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "dndecor:letter_signs"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "dndecor:x_sign_from_letter_signs_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_letter_signs",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "dndecor:x_sign_from_letter_signs_stonecutting"
+    ]
+  },
+  "sends_telemetry_event": false
+}

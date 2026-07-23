@@ -1,0 +1,9 @@
+
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "tag": "forge:storage_blocks/brass"
+  },
+  "result": "dndecor:brass_boiler_large",
+  "count": 1
+}

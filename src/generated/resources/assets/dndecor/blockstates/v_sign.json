@@ -1,0 +1,114 @@
+{
+  "variants": {
+    "facing=down,rotation=east": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 180,
+      "y": 270
+    },
+    "facing=down,rotation=north": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,rotation=south": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 180
+    },
+    "facing=down,rotation=west": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,rotation=east": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotation=north": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotation=south": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,rotation=west": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,rotation=east": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90
+    },
+    "facing=north,rotation=north": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90
+    },
+    "facing=north,rotation=south": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90
+    },
+    "facing=north,rotation=west": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90
+    },
+    "facing=south,rotation=east": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotation=north": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotation=south": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,rotation=west": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,rotation=east": {
+      "model": "dndecor:block/v_sign/block",
+      "y": 270
+    },
+    "facing=up,rotation=north": {
+      "model": "dndecor:block/v_sign/block",
+      "y": 180
+    },
+    "facing=up,rotation=south": {
+      "model": "dndecor:block/v_sign/block"
+    },
+    "facing=up,rotation=west": {
+      "model": "dndecor:block/v_sign/block",
+      "y": 90
+    },
+    "facing=west,rotation=east": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotation=north": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotation=south": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,rotation=west": {
+      "model": "dndecor:block/v_sign/block",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

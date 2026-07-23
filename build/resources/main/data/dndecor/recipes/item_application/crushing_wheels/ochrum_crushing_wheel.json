@@ -1,0 +1,17 @@
+
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "tag": "forge:assets/create/crushing_wheels"
+    },
+    {
+      "item": "create:ochrum"
+    }
+  ],
+  "results": [
+    {
+      "item": "dndecor:ochrum_crushing_wheel"
+    }
+  ]
+}

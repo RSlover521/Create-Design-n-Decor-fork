@@ -1,0 +1,7 @@
+{
+	"parent": "dndecor:block/screws_rotated",
+	"textures": {
+		"0": "dndecor:block/copper_screw",
+		"particle": "dndecor:block/copper_screw"
+	}
+}

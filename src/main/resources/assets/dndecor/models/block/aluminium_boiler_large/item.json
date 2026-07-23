@@ -1,0 +1,6 @@
+{
+	"parent": "dndecor:block/aluminium_boiler_large/aluminium_boiler",
+	"loader": "forge:obj",
+	"flip_v": true,
+	"model": "dndecor:models/block/boilers/large_item.obj"
+}

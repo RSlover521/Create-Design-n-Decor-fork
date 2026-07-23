@@ -1,0 +1,17 @@
+
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "create:large_cogwheel"
+    },
+    {
+      "tag": "dndecor:industrial_iron"
+    }
+  ],
+  "results": [
+    {
+      "item": "dndecor:industrial_gear_large"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "dndecor:block/old/green_metal_plate",
+    "side": "dndecor:block/old/green_metal_plate",
+    "top": "dndecor:block/old/green_metal_plate"
+  }
+}

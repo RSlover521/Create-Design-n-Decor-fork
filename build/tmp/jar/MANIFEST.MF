@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Specification-Title: dndecor
+Specification-Vendor: Luna, DrMangoTea, RSlover521
+Specification-Version: 1
+Implementation-Title: create-design-n-decor-1-20-1
+Implementation-Version: 2.1.0-beta
+Implementation-Vendor: Luna, DrMangoTea, RSlover521
+Implementation-Timestamp: 2026-07-23T14:00:19-0500
+MixinConfigs: dndecor.mixins.json
+

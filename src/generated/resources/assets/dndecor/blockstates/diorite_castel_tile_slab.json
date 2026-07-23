@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "dndecor:block/diorite_castel_tile_slab"
+    },
+    "type=double": {
+      "model": "dndecor:block/diorite_castel_tiles"
+    },
+    "type=top": {
+      "model": "dndecor:block/diorite_castel_tile_slab_top"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "dndecor:block/stairs/scorchia_castel_bricks",
+    "side": "dndecor:block/stairs/scorchia_castel_bricks",
+    "top": "dndecor:block/stairs/scorchia_castel_bricks"
+  }
+}

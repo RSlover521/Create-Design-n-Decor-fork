@@ -1,0 +1,99 @@
+---- Minecraft Crash Report ----
+// Don't do that.
+
+Time: 2026-07-22 19:56:48
+Description: Exception in server tick loop
+
+java.lang.RuntimeException: Could not find structure file gameteststructures\empty.snbt, and the structure is not available in the world structures either.
+	at net.minecraft.gametest.framework.StructureUtils.getStructureTemplate(StructureUtils.java:246) ~[forge-1.20.1-47.4.8_mapped_official_1.20.1.jar%23191!/:?] {re:classloading}
+	at net.minecraft.gametest.framework.StructureUtils.spawnStructure(StructureUtils.java:139) ~[forge-1.20.1-47.4.8_mapped_official_1.20.1.jar%23191!/:?] {re:classloading}
+	at net.minecraft.gametest.framework.GameTestBatchRunner.createStructuresForBatch(GameTestBatchRunner.java:108) ~[forge-1.20.1-47.4.8_mapped_official_1.20.1.jar%23191!/:?] {re:classloading}
+	at net.minecraft.gametest.framework.GameTestBatchRunner.runBatch(GameTestBatchRunner.java:64) ~[forge-1.20.1-47.4.8_mapped_official_1.20.1.jar%23191!/:?] {re:classloading}
+	at net.minecraft.gametest.framework.GameTestBatchRunner.start(GameTestBatchRunner.java:52) ~[forge-1.20.1-47.4.8_mapped_official_1.20.1.jar%23191!/:?] {re:classloading}
+	at net.minecraft.gametest.framework.GameTestRunner.runTestBatches(GameTestRunner.java:50) ~[forge-1.20.1-47.4.8_mapped_official_1.20.1.jar%23191!/:?] {re:classloading}
+	at net.minecraft.gametest.framework.GameTestServer.startTests(GameTestServer.java:177) ~[forge-1.20.1-47.4.8_mapped_official_1.20.1.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.gametest.framework.GameTestServer.tickServer(GameTestServer.java:122) ~[forge-1.20.1-47.4.8_mapped_official_1.20.1.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.8_mapped_official_1.20.1.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.8_mapped_official_1.20.1.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:842) ~[?:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- System Details --
+Details:
+	Minecraft Version: 1.20.1
+	Minecraft Version ID: 1.20.1
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 17.0.12, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode, sharing), Oracle Corporation
+	Memory: 1577058304 bytes (1504 MiB) / 3468689408 bytes (3308 MiB) up to 8417968128 bytes (8028 MiB)
+	CPUs: 16
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Ryzen 7 5800H with Radeon Graphics         
+	Identifier: AuthenticAMD Family 25 Model 80 Stepping 0
+	Microarchitecture: Zen 3
+	Frequency (GHz): 3.19
+	Number of physical packages: 1
+	Number of physical CPUs: 8
+	Number of logical CPUs: 16
+	Graphics card #0 name: NVIDIA GeForce RTX 3070 Laptop GPU
+	Graphics card #0 vendor: NVIDIA (0x10de)
+	Graphics card #0 VRAM (MB): 4095.00
+	Graphics card #0 deviceId: 0x24dd
+	Graphics card #0 versionInfo: DriverVersion=32.0.16.1074
+	Graphics card #1 name: AMD Radeon(TM) Graphics
+	Graphics card #1 vendor: Advanced Micro Devices, Inc. (0x1002)
+	Graphics card #1 VRAM (MB): 512.00
+	Graphics card #1 deviceId: 0x1638
+	Graphics card #1 versionInfo: DriverVersion=31.0.21924.61
+	Memory slot #0 capacity (MB): 16384.00
+	Memory slot #0 clockSpeed (GHz): 3.20
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MB): 16384.00
+	Memory slot #1 clockSpeed (GHz): 3.20
+	Memory slot #1 type: DDR4
+	Virtual memory max (MB): 41623.99
+	Virtual memory used (MB): 32986.74
+	Swap memory total (MB): 9519.75
+	Swap memory used (MB): 147.19
+	JVM Flags: 0 total; 
+	Server Running: true
+	Player Count: 0 / 1; []
+	Data Packs: vanilla, mod:mixinextras (incompatible), mod:spark (incompatible), mod:forge, mod:flywheel, mod:ponder (incompatible), mod:create, mod:createaddition (incompatible), mod:jei, mod:dndecor, create:dynamic_data
+	Enabled Feature Flags: minecraft:vanilla
+	World Generation: Stable
+	Type: Game test server
+	ModLauncher: 10.0.9+10.0.9+main.dcd20f30
+	ModLauncher launch target: forgegametestserveruserdev
+	ModLauncher naming: mcp
+	ModLauncher services: 
+		mixin-0.8.5.jar mixin PLUGINSERVICE 
+		eventbus-6.0.5.jar eventbus PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.8.jar slf4jfixer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.8.jar object_holder_definalize PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.8.jar runtime_enum_extender PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.8.jar capability_token_subclass PLUGINSERVICE 
+		accesstransformers-8.0.4.jar accesstransformer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.8.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-10.0.9.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		minecraft@1.0
+		lowcodefml@null
+		javafml@null
+	Mod List: 
+		forge-1.20.1-47.4.8_mapped_official_1.20.1.jar    |Minecraft                     |minecraft                     |1.20.1              |DONE      |Manifest: a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
+		mixinextras-forge-0.4.1.jar                       |MixinExtras                   |mixinextras                   |0.4.1               |DONE      |Manifest: NOSIGNATURE
+		spark-361579-4738952_mapped_official_1.20.1.jar   |spark                         |spark                         |1.10.53             |DONE      |Manifest: NOSIGNATURE
+		                                                  |Forge                         |forge                         |47.4.8              |DONE      |Manifest: NOSIGNATURE
+		flywheel-forge-1.20.1-1.0.4_mapped_official_1.20.1|Flywheel                      |flywheel                      |1.0.4               |DONE      |Manifest: NOSIGNATURE
+		Ponder-Forge-1.20.1-1.0.80_mapped_official_1.20.1.|Ponder                        |ponder                        |1.0.80              |DONE      |Manifest: NOSIGNATURE
+		create-1.20.1-6.0.8-289_mapped_official_1.20.1-sli|Create                        |create                        |6.0.8-289           |DONE      |Manifest: NOSIGNATURE
+		createaddition-439890-6256349_mapped_official_1.20|Create Crafts & Additions     |createaddition                |1.20.1-1.3.0        |DONE      |Manifest: NOSIGNATURE
+		jei-1.20.1-forge-15.19.0.85_mapped_official_1.20.1|Just Enough Items             |jei                           |15.19.0.85          |DONE      |Manifest: NOSIGNATURE
+		main                                              |Design n' Decor               |dndecor                       |2.1.0               |DONE      |Manifest: NOSIGNATURE
+	Crash Report UUID: e4ca3a3f-7417-466e-9259-169ad6b7a4f6
+	FML: 47.4
+	Forge: net.minecraftforge:47.4.8

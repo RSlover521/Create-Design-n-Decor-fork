@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "dndecor:block/calcite_castel_bricks",
+    "side": "dndecor:block/calcite_castel_bricks",
+    "top": "dndecor:block/calcite_castel_bricks"
+  }
+}

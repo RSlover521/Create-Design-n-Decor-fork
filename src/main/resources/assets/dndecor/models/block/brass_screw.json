@@ -1,0 +1,7 @@
+{
+	"parent": "dndecor:block/screws",
+	"textures": {
+		"0": "dndecor:block/brass_screw",
+		"particle": "dndecor:block/brass_screw"
+	}
+}

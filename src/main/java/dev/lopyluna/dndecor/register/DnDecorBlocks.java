@@ -22,8 +22,10 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.lopyluna.dndecor.DnDecor;
 import dev.lopyluna.dndecor.DnDecorBlockStateGen;
 import dev.lopyluna.dndecor.content.blocks.*;
@@ -62,12 +64,14 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.Tags;
@@ -75,6 +79,8 @@ import net.minecraftforge.fml.ModList;
 
 
 import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.simibubi.create.api.behaviour.display.DisplaySource.displaySource;
 import static com.simibubi.create.api.behaviour.display.DisplayTarget.displayTarget;
@@ -91,6 +97,610 @@ import static dev.lopyluna.dndecor.register.helpers.BlockTransgender.*;
 
 @SuppressWarnings({"removal", "deprecation", "SameParameterValue", "unused"})
 public class DnDecorBlocks {
+
+    private static void emptyLoot(RegistrateBlockLootTables tables, Block block) {
+        tables.add(block, LootTable.lootTable());
+    }
+
+    private static final String[][] LEGACY_LARGE_CHAINS = {
+            {"aluminium", "Aluminium"},
+            {"andesite", "Andesite"},
+            {"brass", "Brass"},
+            {"bronze", "Bronze"},
+            {"cast_iron", "Cast Iron"},
+            {"cobalt", "Cobalt"},
+            {"copper", "Copper"},
+            {"electrum", "Electrum"},
+            {"gold", "Gold"},
+            {"hepatizon", "Hepatizon"},
+            {"industrial_iron", "Industrial Iron"},
+            {"invar", "Invar"},
+            {"iron", "Iron"},
+            {"knightslime", "Knightslime"},
+            {"lead", "Lead"},
+            {"manyullyn", "Manyullyn"},
+            {"mithril", "Mithril"},
+            {"netherite", "Netherite"},
+            {"nethersteel", "Nethersteel"},
+            {"nickel", "Nickel"},
+            {"pig_iron", "Pig Iron"},
+            {"queen_slime", "Queen Slime"},
+            {"rose_gold", "Rose Gold"},
+            {"silver", "Silver"},
+            {"steel", "Steel"},
+            {"strong_bronze", "Strong Bronze"},
+            {"tin", "Tin"},
+            {"zinc", "Zinc"}
+    };
+
+    /** Original large-chain registry paths retained for world and item compatibility. */
+    public static final List<BlockEntry<LargeChain>> LEGACY_LARGE_CHAIN_BLOCKS = registerLegacyLargeChains();
+
+    private static List<BlockEntry<LargeChain>> registerLegacyLargeChains() {
+        List<BlockEntry<LargeChain>> chains = new ArrayList<>(LEGACY_LARGE_CHAINS.length);
+        for (String[] chain : LEGACY_LARGE_CHAINS)
+            chains.add(registerLegacyLargeChain(chain[0], chain[1]));
+        return List.copyOf(chains);
+    }
+
+    private static BlockEntry<LargeChain> registerLegacyLargeChain(String metal, String displayName) {
+        String id = metal + "_large_chain";
+        String chainTexture = metal + "_large_chain";
+        var builder = REGISTRATE.block(id, LargeChain::new)
+                .initialProperties(SharedProperties::softMetal)
+                .properties(p -> p.sound(DnDecorSoundTypes.CHAIN_HEAVY))
+                .addLayer(() -> RenderType::cutout)
+                .transform(pickaxeOnly())
+                .lang("Large " + displayName + " Chain")
+                .blockstate((c, p) -> {
+                    p.models().withExistingParent("block/" + c.getName(), DnDecor.asResource("block/large_chain"))
+                            .texture("0", DnDecor.asResource("block/" + chainTexture));
+                    p.models().withExistingParent("block/" + c.getName() + "/block", DnDecor.asResource("block/large_chain"))
+                            .texture("0", DnDecor.asResource("block/" + chainTexture));
+                    p.models().withExistingParent("block/" + c.getName() + "/item", DnDecor.asResource("block/large_chain"))
+                            .texture("0", DnDecor.asResource("block/" + chainTexture));
+                    BlockStateGen.axisBlock(c, p, getBlockModel(true, c, p));
+                })
+                .tag(AllTags.AllBlockTags.BRITTLE.tag, BlockTags.CLIMBABLE)
+                .loot((tables, block) -> tables.dropSelf(block));
+
+        if (metal.equals("netherite"))
+            builder = builder.item().properties(Item.Properties::fireResistant).build();
+        else
+            builder = builder.simpleItem();
+        return builder.register();
+    }
+
+    /** All original wallpaper paths retained for world and item compatibility. */
+    public static final List<BlockEntry<Block>> LEGACY_WALLPAPERS = registerLegacyWallpapers();
+
+    private static List<BlockEntry<Block>> registerLegacyWallpapers() {
+        List<BlockEntry<Block>> wallpapers = new ArrayList<>(DyeColor.values().length * 3);
+        for (DyeColor color : DyeColor.values()) {
+            String colorId = color.getName();
+            String colorName = switch (color) {
+                case LIGHT_BLUE -> "Light Blue";
+                case LIGHT_GRAY -> "Light Gray";
+                default -> Character.toUpperCase(colorId.charAt(0)) + colorId.substring(1);
+            };
+            wallpapers.add(registerLegacyWallpaper("wallpaper_arrow_" + colorId,
+                    colorName + " Arrow Wallpaper"));
+            wallpapers.add(registerLegacyWallpaper("wallpaper_striped_" + colorId,
+                    colorName + " Striped Wallpaper"));
+            wallpapers.add(registerLegacyWallpaper(colorId + "_wallpaper_wavy",
+                    colorName + " Wavy Wallpaper"));
+        }
+        return List.copyOf(wallpapers);
+    }
+
+    private static BlockEntry<Block> registerLegacyWallpaper(String id, String displayName) {
+        return REGISTRATE.block(id, Block::new)
+                .initialProperties(SharedProperties::wooden)
+                .transform(axeOrPickaxe())
+                .lang(displayName)
+                .simpleItem()
+                .register();
+    }
+
+    private static final String[][] LEGACY_CASTEL_MATERIALS = {
+            {"andesite", "Andesite"}, {"asurine", "Asurine"}, {"calcite", "Calcite"},
+            {"crimsite", "Crimsite"}, {"deepslate", "Deepslate"}, {"diorite", "Diorite"},
+            {"dripstone", "Dripstone"}, {"granite", "Granite"}, {"limestone", "Limestone"},
+            {"ochrum", "Ochrum"}, {"scorchia", "Scorchia"}, {"scoria", "Scoria"},
+            {"tuff", "Tuff"}, {"veridium", "Veridium"}
+    };
+
+    /** All 112 original "castel" paths retained with the historical spelling. */
+    public static final List<BlockEntry<?>> LEGACY_CASTEL_BLOCKS = registerLegacyCastelBlocks();
+
+    private static List<BlockEntry<?>> registerLegacyCastelBlocks() {
+        List<BlockEntry<?>> blocks = new ArrayList<>(LEGACY_CASTEL_MATERIALS.length * 8);
+        for (String[] material : LEGACY_CASTEL_MATERIALS) {
+            String id = material[0];
+            String name = material[1];
+            Block source = legacyCastelSource(id);
+            blocks.addAll(registerLegacyCastelFamily(id, name, "brick", "Bricks", source));
+            blocks.addAll(registerLegacyCastelFamily(id, name, "tile", "Tiles", source));
+        }
+        return List.copyOf(blocks);
+    }
+
+    private static Block legacyCastelSource(String material) {
+        return switch (material) {
+            case "andesite" -> Blocks.ANDESITE;
+            case "calcite", "ochrum" -> Blocks.CALCITE;
+            case "diorite" -> Blocks.DIORITE;
+            case "dripstone" -> Blocks.DRIPSTONE_BLOCK;
+            case "granite" -> Blocks.GRANITE;
+            case "limestone" -> Blocks.SANDSTONE;
+            case "scoria", "scorchia" -> Blocks.BLACKSTONE;
+            case "tuff", "veridium" -> Blocks.TUFF;
+            default -> Blocks.DEEPSLATE;
+        };
+    }
+
+    private static List<BlockEntry<?>> registerLegacyCastelFamily(String material, String displayName,
+                                                                   String pattern, String plural,
+                                                                   Block source) {
+        String texture = material + "_castel_" + pattern + "s";
+        String baseId = texture;
+        String singular = pattern.equals("brick") ? "Brick" : "Tile";
+
+        BlockEntry<Block> base = REGISTRATE.block(baseId, Block::new)
+                .initialProperties(() -> source)
+                .properties(p -> p.destroyTime(1.25f))
+                .transform(pickaxeOnly())
+                .lang(displayName + " Castel " + plural)
+                .loot(RegistrateBlockLootTables::dropSelf)
+                .simpleItem()
+                .register();
+
+        BlockEntry<SlabBlock> slab = REGISTRATE.block(material + "_castel_" + pattern + "_slab", SlabBlock::new)
+                .initialProperties(() -> source)
+                .properties(p -> p.destroyTime(1f))
+                .transform(pickaxeOnly())
+                .tag(BlockTags.SLABS)
+                .lang(displayName + " Castel " + singular + " Slab")
+                .blockstate((c, p) -> p.slabBlock(c.get(), DnDecor.asResource("block/" + texture),
+                        DnDecor.asResource("block/" + texture)))
+                .loot(RegistrateBlockLootTables::dropSelf)
+                .simpleItem()
+                .register();
+
+        BlockEntry<StairBlock> stairs = REGISTRATE.block(material + "_castel_" + pattern + "_stairs",
+                        p -> new StairBlock(base.getDefaultState(), p))
+                .initialProperties(() -> source)
+                .properties(p -> p.destroyTime(1.25f))
+                .transform(pickaxeOnly())
+                .tag(BlockTags.STAIRS)
+                .lang(displayName + " Castel " + singular + " Stairs")
+                .blockstate((c, p) -> p.stairsBlock(c.get(),
+                        DnDecor.asResource("block/stairs/" + texture)))
+                .loot(RegistrateBlockLootTables::dropSelf)
+                .simpleItem()
+                .register();
+
+        BlockEntry<WallBlock> wall = REGISTRATE.block(material + "_castel_" + pattern + "_wall", WallBlock::new)
+                .initialProperties(() -> source)
+                .properties(p -> p.destroyTime(1.25f))
+                .transform(pickaxeOnly())
+                .tag(BlockTags.WALLS)
+                .lang(displayName + " Castel " + singular + " Wall")
+                .blockstate((c, p) -> p.wallBlock(c.get(),
+                        DnDecor.asResource("block/walls/" + texture)))
+                .loot(RegistrateBlockLootTables::dropSelf)
+                .item()
+                .model((c, p) -> p.wallInventory(c.getName(),
+                        DnDecor.asResource("block/walls/" + texture)))
+                .build()
+                .register();
+
+        return List.of(base, slab, stairs, wall);
+    }
+
+    private static final String[][] LEGACY_BOILERS = {
+            {"brass_boiler", "brass_boiler", "Brass Boiler"},
+            {"aluminum_boiler", "aluminium_boiler", "Aluminium Boiler"},
+            {"aluminum_boiler_special", "aluminium_boiler_special", "Aluminium Boiler"},
+            {"gold_boiler", "gold_boiler", "Gold Boiler"},
+            {"copper_boiler", "copper_boiler", "Copper Boiler"},
+            {"zinc_boiler", "zinc_boiler", "Zinc Boiler"},
+            {"industrial_iron_boiler", "industrial_iron_boiler", "Industrial Iron Boiler"},
+            {"andesite_boiler", "andesite_boiler", "Andesite Boiler"},
+            {"cast_iron_boiler", "cast_iron_boiler", "Cast Iron Boiler"},
+            {"capitalism_boiler", "capitalism_boiler", "Capitalism Boiler"}
+    };
+
+    /** Original boiler registry entries retained for world and item compatibility. */
+    public static final List<BlockEntry<LegacyBoilerBlock>> LEGACY_BOILER_BLOCKS = registerLegacyBoilers();
+
+    private static final String[][] LEGACY_LARGE_BOILERS = {
+            {"aluminium", "Aluminium"},
+            {"andesite", "Andesite"},
+            {"brass", "Brass"},
+            {"capitalism", "Capitalism"},
+            {"cast_iron", "Cast Iron"},
+            {"copper", "Copper"},
+            {"gold", "Gold"},
+            {"industrial_iron", "Industrial Iron"},
+            {"zinc", "Zinc"}
+    };
+
+    public static final List<BlockEntry<LegacyLargeBoilerBlock>> LEGACY_LARGE_BOILER_BLOCKS =
+            registerLegacyLargeBoilers();
+    public static final List<BlockEntry<LegacyBoilerStructureBlock>> LEGACY_BOILER_STRUCTURE_BLOCKS =
+            registerLegacyBoilerStructures();
+
+    private static List<BlockEntry<LegacyBoilerBlock>> registerLegacyBoilers() {
+        List<BlockEntry<LegacyBoilerBlock>> boilers = new ArrayList<>(LEGACY_BOILERS.length);
+        for (String[] boiler : LEGACY_BOILERS)
+            boilers.add(registerLegacyBoiler(boiler[0], boiler[1], boiler[2]));
+        return List.copyOf(boilers);
+    }
+
+    private static BlockEntry<LegacyBoilerBlock> registerLegacyBoiler(String id, String texture,
+                                                                       String displayName) {
+        return REGISTRATE.block(id, LegacyBoilerBlock::new)
+                .initialProperties(SharedProperties::copperMetal)
+                .properties(BlockBehaviour.Properties::noOcclusion)
+                .transform(pickaxeOnly())
+                .lang(displayName)
+                .addLayer(() -> RenderType::cutoutMipped)
+                // The original 0.4.0b boiler uses Forge's OBJ loader. Its blockstate
+                // and model chain are preserved as static assets instead of being
+                // replaced by Registrate's default cube model during data generation.
+                .blockstate((c, p) -> {})
+                .loot((tables, block) -> tables.dropSelf(block))
+                .item()
+                .model((c, p) -> {})
+                .build()
+                .register();
+    }
+
+    private static List<BlockEntry<LegacyLargeBoilerBlock>> registerLegacyLargeBoilers() {
+        List<BlockEntry<LegacyLargeBoilerBlock>> boilers = new ArrayList<>(LEGACY_LARGE_BOILERS.length);
+        for (String[] boiler : LEGACY_LARGE_BOILERS) {
+            String id = boiler[0] + "_boiler_large";
+            boilers.add(REGISTRATE.block(id, LegacyLargeBoilerBlock::new)
+                    .initialProperties(SharedProperties::copperMetal)
+                    .properties(BlockBehaviour.Properties::noOcclusion)
+                    .transform(pickaxeOnly())
+                    .lang("Large " + boiler[1] + " Boiler")
+                    .addLayer(() -> RenderType::cutoutMipped)
+                    .blockstate((c, p) -> {})
+                    .loot((tables, block) -> tables.add(block, LootTable.lootTable()))
+                    .item()
+                    .model((c, p) -> {})
+                    .build()
+                    .register());
+        }
+        return List.copyOf(boilers);
+    }
+
+    private static List<BlockEntry<LegacyBoilerStructureBlock>> registerLegacyBoilerStructures() {
+        List<BlockEntry<LegacyBoilerStructureBlock>> structures = new ArrayList<>(LEGACY_LARGE_BOILERS.length);
+        for (String[] boiler : LEGACY_LARGE_BOILERS) {
+            String id = boiler[0] + "_boiler_structure";
+            structures.add(REGISTRATE.block(id, LegacyBoilerStructureBlock::new)
+                    .initialProperties(SharedProperties::copperMetal)
+                    .properties(BlockBehaviour.Properties::noOcclusion)
+                    .transform(pickaxeOnly())
+                    .lang("Large " + boiler[1] + " Boiler")
+                    .blockstate((c, p) -> {})
+                    .loot((tables, block) -> tables.add(block, LootTable.lootTable()))
+                    .register());
+        }
+        return List.copyOf(structures);
+    }
+
+    // Standalone registry entries retained for 0.4.0b world compatibility.
+    public static final BlockEntry<LeverBlock> BREAKER_SWITCH = REGISTRATE.block("breaker_switch", LeverBlock::new)
+            .initialProperties(() -> Blocks.LEVER).lang("Breaker Switch")
+            .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot)
+            .item().model((c, p) -> {}).build().register();
+    public static final BlockEntry<Block> CAPITALISM_BLOCK = legacySimple("capitalism_block", "Block of Capitalism");
+
+    /** The complete 0.4.0b Metal Decorations registry set, with its original state schemas. */
+    public static final List<BlockEntry<?>> LEGACY_METAL_DECORATIONS = registerLegacyMetalDecorations();
+
+    private static List<BlockEntry<?>> registerLegacyMetalDecorations() {
+        List<BlockEntry<?>> blocks = new ArrayList<>(26);
+        blocks.add(legacyMetal("andesite_floodlight", "Andesite Floodlight", LegacyMetalDecorationBlocks.Floodlight::new, true));
+        blocks.add(legacyMetal("brass_floodlight", "Brass Floodlight", LegacyMetalDecorationBlocks.Floodlight::new, true));
+        blocks.add(legacyMetal("copper_floodlight", "Copper Floodlight", LegacyMetalDecorationBlocks.Floodlight::new, true));
+        for (String metal : List.of("brass", "copper", "iron", "zinc"))
+            blocks.add(legacyMetal(metal + "_catwalk", title(metal) + " Catwalk", LegacyMetalDecorationBlocks.Catwalk::new, true));
+        for (String metal : List.of("brass", "copper", "zinc"))
+            blocks.add(legacyMetal(metal + "_lamp", title(metal) + " Lamp", LegacyMetalDecorationBlocks.Lamp::new, true));
+        for (String metal : List.of("brass", "copper", "zinc"))
+            blocks.add(legacyMetal(metal + "_light", title(metal) + " Light", Block::new, false));
+        for (String metal : List.of("brass", "copper", "iron", "zinc"))
+            blocks.add(legacyMetal(metal + "_railing", title(metal) + " Railing", LegacyMetalDecorationBlocks.Railing::new, true));
+        for (String metal : List.of("brass", "copper", "zinc"))
+            blocks.add(legacyMetal(metal + "_screw", title(metal) + " Screw", LegacyMetalDecorationBlocks.Screw::new, true));
+        for (String metal : List.of("brass", "copper", "zinc"))
+            blocks.add(legacyMetal(metal + "_bolt", title(metal) + " Bolt", LegacyMetalDecorationBlocks.Screw::new, true));
+        blocks.add(legacyMetal("blue_container", "Blue Container", LegacyMetalDecorationBlocks.Container::new, false));
+        blocks.add(legacyMetal("green_container", "Green Container", LegacyMetalDecorationBlocks.Container::new, false));
+        blocks.add(legacyMetal("red_container", "Red Container", LegacyMetalDecorationBlocks.Container::new, false));
+        return List.copyOf(blocks);
+    }
+
+    private static String title(String value) {
+        return Character.toUpperCase(value.charAt(0)) + value.substring(1).replace('_', ' ');
+    }
+
+    private static <T extends Block> BlockEntry<T> legacyMetal(String id, String name,
+            NonNullFunction<BlockBehaviour.Properties, T> factory, boolean cutout) {
+        var builder = REGISTRATE.block(id, factory)
+                .initialProperties(SharedProperties::softMetal)
+                .properties(p -> p.noOcclusion().lightLevel(state -> id.endsWith("_light") || id.endsWith("_lamp") ? 15
+                        : id.endsWith("_floodlight") && state.getValue(LegacyMetalDecorationBlocks.Floodlight.TURNED_ON) ? 15 : 0))
+                .transform(pickaxeOnly()).lang(name)
+                .blockstate((c, p) -> {})
+                .loot((tables, block) -> tables.dropSelf(block));
+        if (cutout) builder = builder.addLayer(() -> RenderType::cutoutMipped);
+        // Legacy catwalks use their preserved static model chain. Registering Create's
+        // connected-texture callbacks here leaves callbacks pending while Create's own
+        // registrate instance receives its first registry event, which is fatal in dev.
+        return builder.item().model((c, p) -> {}).build().register();
+    }
+    public static final BlockEntry<LegacyDirectionalBlock> CARDBOARD_BOX = REGISTRATE.block("cardboard_box", LegacyDirectionalBlock::new)
+            .initialProperties(() -> Blocks.OAK_PLANKS).lang("Cardboard Box")
+            .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot)
+            .item().model((c, p) -> {}).build().register();
+    public static final BlockEntry<LegacyCeilingFanBlock> CEILING_FAN = REGISTRATE
+            .block("ceiling_fan", LegacyCeilingFanBlock::new)
+            .initialProperties(SharedProperties::softMetal).lang("Ceiling Fan")
+            .addLayer(() -> RenderType::cutout)
+            .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot)
+            .item().model((c, p) -> {}).build().register();
+    public static final BlockEntry<LegacyShapedBlock> COPPER_GAS_TANK = legacyShaped("copper_gas_tank", "Compact Fluid Tank", Block.box(1, 0, 1, 15, 16, 15), true);
+    public static final BlockEntry<LegacyCrushingWheelControllerBlock> CRUSHING_WHEEL_CONTROLLER = REGISTRATE
+            .block("crushing_wheel_controller", LegacyCrushingWheelControllerBlock::new)
+            .initialProperties(SharedProperties::stone).blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot).register();
+    public static final BlockEntry<LegacyShapedBlock> GAS_TANK = legacyShaped("gas_tank", "Compact Iron Fluid Tank", Block.box(1, 0, 1, 15, 16, 15), true);
+    public static final BlockEntry<Block> HORIZONTAL_TINTED_FRAMED_GLASS = legacyGlass("horizontal_tinted_framed_glass", "Horizontal Tinted Framed Glass");
+    public static final BlockEntry<LegacyIndustrialGearBlock> INDUSTRIAL_GEAR = legacyGear("industrial_gear", "Industrial Gear", false);
+    public static final BlockEntry<LegacyIndustrialGearBlock> INDUSTRIAL_GEAR_LARGE = legacyGear("industrial_gear_large", "Large Industrial Gear", true);
+    public static final BlockEntry<Block> INDUSTRIAL_GOLD_BLOCK = legacySimple("industrial_gold_block", "Block of Industrial Gold");
+    public static final BlockEntry<Block> INDUSTRIAL_GOLD_FLOOR = legacySimple("industrial_gold_floor", "Industrial Gold Floor");
+    public static final BlockEntry<Block> INDUSTRIAL_IRON_FLOOR = legacySimple("industrial_iron_floor", "Industrial Iron Floor");
+    public static final BlockEntry<Block> METAL_PLATE = legacySimple("metal_plate", "Metal Plate");
+    public static final BlockEntry<SlabBlock> METAL_PLATE_SLAB = legacySlab("metal_plate_slab", "Metal Plate Slab");
+    public static final BlockEntry<StairBlock> METAL_PLATE_STAIRS = legacyStairs("metal_plate_stairs", "Metal Plate Stairs", METAL_PLATE);
+    public static final BlockEntry<WallBlock> METAL_PLATE_WALL = legacyWall("metal_plate_wall", "Metal Plate Wall");
+    public static final BlockEntry<Block> METAL_SHEET = legacySimple("metal_sheet", "Metal Sheet");
+    public static final BlockEntry<SlabBlock> METAL_SHEET_SLAB = legacySlab("metal_sheet_slab", "Metal Sheet Slab");
+    public static final BlockEntry<StairBlock> METAL_SHEET_STAIRS = legacyStairs("metal_sheet_stairs", "Metal Sheet Stairs", METAL_SHEET);
+    public static final BlockEntry<WallBlock> METAL_SHEET_WALL = legacyWall("metal_sheet_wall", "Metal Sheet Wall");
+    /** The 128 dyed metal plate/sheet entries from the original release. */
+    public static final List<BlockEntry<?>> LEGACY_COLORED_METAL_BLOCKS = registerLegacyColoredMetalBlocks();
+    public static final BlockEntry<Block> RED_STONE_TILES = legacySimple("red_stone_tiles", "Red Deepslate Tiles");
+    public static final BlockEntry<Block> STONE_TILES = legacySimple("stone_tiles", "Deepslate Tiles");
+    public static final BlockEntry<Block> TINTED_FRAMED_GLASS = legacyGlass("tinted_framed_glass", "Tinted Framed Glass");
+    public static final BlockEntry<Block> VERTICAL_TINTED_FRAMED_GLASS = legacyGlass("vertical_tinted_framed_glass", "Vertical Tinted Framed Glass");
+    public static final BlockEntry<LegacyShapedBlock> WOOD_SUPPORT = REGISTRATE.block("wood_support",
+                    p -> new LegacyShapedBlock(p, Block.box(4, 0, 4, 12, 16, 12)))
+            .initialProperties(() -> Blocks.OAK_PLANKS).lang("Wooden Support")
+            .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot)
+            .item().model((c, p) -> {}).build().register();
+
+    private static BlockEntry<Block> legacySimple(String id, String name) {
+        return REGISTRATE.block(id, Block::new).initialProperties(SharedProperties::softMetal).lang(name)
+                .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot)
+                .item().model((c, p) -> {}).build().register();
+    }
+
+    private static BlockEntry<Block> legacyGlass(String id, String name) {
+        return REGISTRATE.block(id, Block::new).initialProperties(() -> Blocks.TINTED_GLASS)
+                .properties(BlockBehaviour.Properties::noOcclusion).addLayer(() -> RenderType::translucent).lang(name)
+                .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot)
+                .item().model((c, p) -> {}).build().register();
+    }
+
+    private static BlockEntry<LegacyIndustrialGearBlock> legacyGear(String id, String name, boolean large) {
+        return REGISTRATE.block(id, p -> new LegacyIndustrialGearBlock(p, large)).initialProperties(SharedProperties::softMetal).lang(name)
+                .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot)
+                .item().model((c, p) -> {}).build().register();
+    }
+
+    private static BlockEntry<LegacyShapedBlock> legacyShaped(String id, String name,
+                                                               net.minecraft.world.phys.shapes.VoxelShape shape,
+                                                               boolean cutout) {
+        var builder = REGISTRATE.block(id, p -> new LegacyShapedBlock(p, shape))
+                .initialProperties(SharedProperties::softMetal).lang(name)
+                .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot);
+        if (cutout)
+            builder = builder.addLayer(() -> RenderType::cutout);
+        return builder.item().model((c, p) -> {}).build().register();
+    }
+
+    private static BlockEntry<SlabBlock> legacySlab(String id, String name) {
+        return REGISTRATE.block(id, SlabBlock::new).initialProperties(SharedProperties::softMetal).lang(name)
+                .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot)
+                .item().model((c, p) -> {}).build().register();
+    }
+
+    private static BlockEntry<StairBlock> legacyStairs(String id, String name, BlockEntry<Block> base) {
+        return REGISTRATE.block(id, p -> new StairBlock(base.getDefaultState(), p))
+                .initialProperties(SharedProperties::softMetal).lang(name)
+                .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot)
+                .item().model((c, p) -> {}).build().register();
+    }
+
+    private static BlockEntry<WallBlock> legacyWall(String id, String name) {
+        return REGISTRATE.block(id, WallBlock::new).initialProperties(SharedProperties::softMetal).lang(name)
+                .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot)
+                .item().model((c, p) -> {}).build().register();
+    }
+
+    private static List<BlockEntry<?>> registerLegacyColoredMetalBlocks() {
+        List<BlockEntry<?>> blocks = new ArrayList<>(DyeColor.values().length * 8);
+        for (DyeColor color : DyeColor.values()) {
+            registerLegacyColoredMetalFamily(blocks, color, "metal_plate", "Metal Plate");
+            registerLegacyColoredMetalFamily(blocks, color, "metal_sheet", "Metal Sheet");
+        }
+        return List.copyOf(blocks);
+    }
+
+    private static void registerLegacyColoredMetalFamily(List<BlockEntry<?>> blocks, DyeColor color,
+                                                           String pattern, String displayName) {
+        String colorName = color.getSerializedName();
+        String id = colorName + "_" + pattern;
+        String name = title(colorName) + " " + displayName;
+        ResourceLocation texture = DnDecor.asResource("block/old/" + id);
+
+        BlockEntry<Block> base = REGISTRATE.block(id, Block::new)
+                .initialProperties(SharedProperties::softMetal)
+                .properties(p -> p.mapColor(color.getMapColor()))
+                .transform(pickaxeOnly())
+                .lang(name)
+                .blockstate((c, p) -> p.simpleBlock(c.get(), p.models().cubeAll(c.getName(), texture)))
+                .loot((tables, block) -> tables.dropSelf(block))
+                .simpleItem()
+                .register();
+        blocks.add(base);
+
+        BlockEntry<SlabBlock> slab = REGISTRATE.block(id + "_slab", SlabBlock::new)
+                .initialProperties(SharedProperties::softMetal)
+                .properties(p -> p.mapColor(color.getMapColor()))
+                .transform(pickaxeOnly())
+                .lang(name + " Slab")
+                .blockstate((c, p) -> p.slabBlock(c.get(), base.getId(), texture, texture, texture))
+                .loot((tables, block) -> tables.add(block, tables.createSlabItemTable(block)))
+                .simpleItem()
+                .register();
+        blocks.add(slab);
+
+        BlockEntry<StairBlock> stairs = REGISTRATE.block(id + "_stairs",
+                        p -> new StairBlock(base.getDefaultState(), p))
+                .initialProperties(SharedProperties::softMetal)
+                .properties(p -> p.mapColor(color.getMapColor()))
+                .transform(pickaxeOnly())
+                .lang(name + " Stairs")
+                .blockstate((c, p) -> p.stairsBlock(c.get(), texture))
+                .loot((tables, block) -> tables.dropSelf(block))
+                .simpleItem()
+                .register();
+        blocks.add(stairs);
+
+        BlockEntry<WallBlock> wall = REGISTRATE.block(id + "_wall", WallBlock::new)
+                .initialProperties(SharedProperties::softMetal)
+                .properties(p -> p.mapColor(color.getMapColor()).forceSolidOn())
+                .transform(pickaxeOnly())
+                .lang(name + " Wall")
+                .blockstate((c, p) -> p.wallBlock(c.get(), c.getName(), texture))
+                .loot((tables, block) -> tables.dropSelf(block))
+                .item()
+                .model((c, p) -> p.wallInventory(c.getName(), texture))
+                .build()
+                .register();
+        blocks.add(wall);
+    }
+
+    public static final TagKey<Item> SIGNS = DnDecorTags.modItemTag("signs");
+    public static final TagKey<Item> LETTER_SIGNS = DnDecorTags.modItemTag("letter_signs");
+
+    private static final String[] LEGACY_LETTER_SIGNS = {
+            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+            "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+            "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
+    };
+    private static final String[][] LEGACY_PICTOGRAM_SIGNS = {
+            {"moyai", "moyai", "Moyai Sign"},
+            {"warning", "warning", "Warning Sign"},
+            {"arrow_up", "up", "Arrow Up Sign"},
+            {"tap", "tap", "Tap Sign"},
+            {"stop", "stop", "Stop Sign"},
+            {"arrow_right", "right", "Arrow Right Sign"},
+            {"arrow_left", "left", "Arrow Left Sign"},
+            {"glitch_warning", "glitch_warning", "Glitch Warning Sign"},
+            {"broken_wrench", "broken_wrench", "Broken Wrench Sign"},
+            {"biohazard", "biohazard", "Biohazard Sign"},
+            {"capitalism_warning", "capitalism_warning", "Capitalism Warning Sign"},
+            {"arrow_down", "down", "Arrow Down Sign"},
+            {"gear", "gear", "Gear Sign"},
+            {"creeper", "creeper", "Creeper Sign"},
+            {"bun", "bun", "Bun Sign"},
+            {"silly", "silly", "Silly Sign"},
+            {"american", "american", "Oil Sign"},
+            {"magnet", "magnet", "Magnet Sign"},
+            {"blank", "blank", "Blank Sign"}
+    };
+
+    /** All 56 block entries retained so compatibility tests and integrations can enumerate them. */
+    public static final List<BlockEntry<LegacySignBlock>> LEGACY_SIGNS = registerLegacySigns();
+
+    private static List<BlockEntry<LegacySignBlock>> registerLegacySigns() {
+        List<BlockEntry<LegacySignBlock>> signs = new ArrayList<>(56);
+        for (String symbol : LEGACY_LETTER_SIGNS)
+            signs.add(registerLegacySign(symbol + "_sign", "old/letter_signs/" + symbol,
+                    symbol.toUpperCase() + " Letter Sign", LETTER_SIGNS));
+        signs.add(registerLegacySign("letter_sign", "old/letter_signs/blank", "Blank Letter Sign", LETTER_SIGNS));
+        for (String[] sign : LEGACY_PICTOGRAM_SIGNS)
+            signs.add(registerLegacySign(sign[0] + "_sign", "old/signs/" + sign[1], sign[2], SIGNS));
+        return List.copyOf(signs);
+    }
+
+    private static BlockEntry<LegacySignBlock> registerLegacySign(String id, String texture,
+                                                                   String displayName, TagKey<Item> tag) {
+        return REGISTRATE.block(id, LegacySignBlock::new)
+                .initialProperties(SharedProperties::softMetal)
+                .properties(p -> p.noOcclusion())
+                .transform(axeOrPickaxe())
+                .lang(displayName)
+                .blockstate((c, p) -> {
+                    ModelFile model = p.models().withExistingParent("block/" + c.getName() + "/block",
+                                    DnDecor.asResource("block/legacy_sign"))
+                            .texture("0", DnDecor.asResource("block/" + texture))
+                            .texture("particle", DnDecor.asResource("block/" + texture));
+                    p.getVariantBuilder(c.get()).forAllStates(state -> {
+                        Direction facing = state.getValue(DirectionalBlock.FACING);
+                        Direction rotation = state.getValue(LegacySignBlock.ROTATION);
+                        int xRotation;
+                        int yRotation;
+                        if (facing == Direction.DOWN) {
+                            xRotation = 180;
+                            yRotation = rotation.toYRot() == 0 ? 0 : (int) rotation.toYRot();
+                        } else if (facing == Direction.UP) {
+                            xRotation = 0;
+                            yRotation = rotation.toYRot() == 0 ? 0 : (int) rotation.toYRot();
+                        } else {
+                            xRotation = 90;
+                            // FACING points toward the supporting wall. The base model
+                            // lies against the top edge, so its wall rotation differs
+                            // from Direction#toYRot (which describes entity yaw).
+                            yRotation = switch (facing) {
+                                case EAST -> 90;
+                                case SOUTH -> 180;
+                                case WEST -> 270;
+                                default -> 0;
+                            };
+                        }
+                        return ConfiguredModel.builder()
+                                .modelFile(model)
+                                .rotationX(xRotation)
+                                .rotationY(yRotation)
+                                .build();
+                    });
+                })
+                .recipe((c, p) -> {
+                    p.stonecutting(DataIngredient.tag(tag), RecipeCategory.DECORATIONS, c, 1);
+                    if (id.equals("blank_sign"))
+                        p.stonecutting(DataIngredient.tag(commonItemTag("nuggets/zinc")),
+                                RecipeCategory.DECORATIONS, c, 1);
+                    if (id.equals("letter_sign"))
+                        p.stonecutting(DataIngredient.tag(commonItemTag("nuggets/brass")),
+                                RecipeCategory.DECORATIONS, c, 1);
+                })
+                .loot((tables, block) -> tables.dropSelf(block))
+                .item()
+                .tag(tag)
+                .model((c, p) -> p.generated(c, DnDecor.asResource("block/" + texture)))
+                .build()
+                .register();
+    }
 
     public static TagKey<Item> darkMetalDecorTag = optionalTag(BuiltInRegistries.ITEM, DnDecor.asResource("dark_metal_decor"));
 
@@ -431,8 +1041,36 @@ public class DnDecorBlocks {
     public static final BlockEntry<ConnectedGlassPaneBlock> ORNATE_IRON_GLASS_PANE =
             customWindowPane("ornate_iron_glass", ORNATE_IRON_GLASS, () -> omni("palettes/ornate_iron_glass"), () -> RenderType::cutoutMipped).register();
 
+    // AllPaletteStoneTypes is not yet populated when MaterialTypeProvider first builds its list on 1.20.1.
+    // Seed the thirteen original machine materials here, immediately before the machine lists consume it.
+    private static final boolean LEGACY_MACHINE_STONES_READY = registerLegacyMachineStoneTypes();
+
+    private static boolean registerLegacyMachineStoneTypes() {
+        addLegacyMachineStone(() -> AllPaletteStoneTypes.ASURINE.baseBlock.get(), "asurine");
+        addLegacyMachineStone(() -> Blocks.CALCITE, "calcite");
+        addLegacyMachineStone(() -> AllPaletteStoneTypes.CRIMSITE.baseBlock.get(), "crimsite");
+        addLegacyMachineStone(() -> Blocks.DEEPSLATE, "deepslate");
+        addLegacyMachineStone(() -> Blocks.DIORITE, "diorite");
+        addLegacyMachineStone(() -> Blocks.DRIPSTONE_BLOCK, "dripstone");
+        addLegacyMachineStone(() -> Blocks.GRANITE, "granite");
+        addLegacyMachineStone(() -> AllPaletteStoneTypes.LIMESTONE.baseBlock.get(), "limestone");
+        addLegacyMachineStone(() -> AllPaletteStoneTypes.OCHRUM.baseBlock.get(), "ochrum");
+        addLegacyMachineStone(() -> AllPaletteStoneTypes.SCORCHIA.baseBlock.get(), "scorchia");
+        addLegacyMachineStone(() -> AllPaletteStoneTypes.SCORIA.baseBlock.get(), "scoria");
+        addLegacyMachineStone(() -> Blocks.TUFF, "tuff");
+        addLegacyMachineStone(() -> AllPaletteStoneTypes.VERIDIUM.baseBlock.get(), "veridium");
+        return true;
+    }
+
+    private static void addLegacyMachineStone(com.tterrag.registrate.util.nullness.NonNullSupplier<Block> block,
+                                               String id) {
+        if (!MaterialTypeProvider.stoneTypes.contains(block)) {
+            MaterialTypeProvider.stoneTypes.add(block);
+            MaterialTypeProvider.stoneTypesRegister.put(block, id);
+        }
+    }
+
     public static final StoneTypeBlockList<CrushingWheelBlock> STONE_TYPE_CRUSHING_WHEELS = new StoneTypeBlockList<>((block, id) -> {
-        if (id.equals("andesite")) return AllBlocks.CRUSHING_WHEEL;
         return REGISTRATE.block(id + "_crushing_wheel", p -> new CrushingWheelTypeBlock(block, p))
                 .properties(p -> p.mapColor(block.get().defaultMapColor()).sound(block.get().defaultBlockState().getSoundType()))
                 .initialProperties(SharedProperties::stone)
@@ -463,7 +1101,6 @@ public class DnDecorBlocks {
     });
 
     public static final StoneTypeBlockList<MillstoneBlock> STONE_TYPE_MILLSTONE = new StoneTypeBlockList<>((block, id) -> {
-        if (id.equals("andesite")) return AllBlocks.MILLSTONE;
         return REGISTRATE.block(id + "_millstone", p -> new MillstoneTypeBlock(id, block, p))
                 .properties(p -> p.mapColor(block.get().defaultMapColor()).sound(block.get().defaultBlockState().getSoundType()))
                 .initialProperties(SharedProperties::stone)

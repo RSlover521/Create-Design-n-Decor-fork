@@ -1,0 +1,20 @@
+
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    " PP",
+    " PP"
+  ],
+  "key": {
+    "P": {
+      "item": "dndecor:cardboard_sheet"
+    }
+  },
+  "result": {
+    "item": "dndecor:cardboard_box",
+    "count": 1
+
+
+  }
+}
