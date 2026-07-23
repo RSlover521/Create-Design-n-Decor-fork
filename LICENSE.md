@@ -1,0 +1,49 @@
+-----CODE-----
+
+MIT License
+
+Copyright (c) 2025 BBB (DrMangoTea, LopyLuna, Pepa, RSlover521)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+-----ART-----
+
+ARR License
+
+Copyright (c) 2025 BBB (DrMangoTea, LopyLuna, Pepa)
+
+## Definitions:
+• Valid Download Links (VDL): Links provided by license through which the assets are distributed and validated.
+
+## Permissions:
+1. Use and Adaptation: You are permitted to use and adapt the assets as long when uploading/publishing, the said person need to obtain the download from said VDL provided by license also.
+
+2. Showcasing: You may showcase the assets, provided that you credit and/or provided VDL in some form for said showcased assets.
+
+## Restrictions:
+• Any use of the assets outside of the scope described above requires explicit permission from said owner.
+
+## Valid Download Links (VDL):
+https://modrinth.com/mod/create-design-n-decor
+https://www.curseforge.com/minecraft/mc-mods/create-design-n-decor
+
+## Contact for Permissions:
+Join and Ask in said Discord Server: https://discord.gg/UHTbHcdkGx
+Message on the Discord Server to check what assets belong to who also

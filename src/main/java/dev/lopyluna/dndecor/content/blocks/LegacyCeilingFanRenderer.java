@@ -24,7 +24,7 @@ public class LegacyCeilingFanRenderer extends KineticBlockEntityRenderer<Bracket
     protected void renderSafe(BracketedKineticBlockEntity be, float partialTicks, PoseStack poseStack,
                               MultiBufferSource buffer, int light, int overlay) {
         renderRotatingBuffer(be,
-                CachedBuffers.partialFacingVertical(AllPartialModels.SHAFT_HALF, be.getBlockState(), Direction.UP),
+                CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF, be.getBlockState(), Direction.UP),
                 poseStack, buffer.getBuffer(RenderType.solid()), light);
         renderRotatingBuffer(be, CachedBuffers.partial(FAN, be.getBlockState()),
                 poseStack, buffer.getBuffer(RenderType.cutout()), light);

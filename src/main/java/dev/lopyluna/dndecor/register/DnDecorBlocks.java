@@ -452,6 +452,7 @@ public class DnDecorBlocks {
     public static final BlockEntry<LegacyCeilingFanBlock> CEILING_FAN = REGISTRATE
             .block("ceiling_fan", LegacyCeilingFanBlock::new)
             .initialProperties(SharedProperties::softMetal).lang("Ceiling Fan")
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutout)
             .blockstate((c, p) -> {}).loot(DnDecorBlocks::emptyLoot)
             .item().model((c, p) -> {}).build().register();
