@@ -1,1 +1,10 @@
 .gradle-user-home/
+run/
+run-data/
+runs/
+build/
+.idea/
+gameteststructures/
+gradle/
+.agents/
+.gradle/
